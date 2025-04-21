@@ -14,7 +14,7 @@ const Modal = function Modal({ open, children }) {
 
   return (
     <dialog className="modal" ref={dialog}>
-      {children}
+      {open ? children : null}
     </dialog>
   );
 };
