@@ -26,17 +26,17 @@ function App() {
     });
   }, []);
 
-  const modal = useRef();
   const selectedPlace = useRef();
   const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
+  const [showModal, setShowModal] = useState(false);
 
   function handleStartRemovePlace(id) {
-    modal.current.open();
+    setShowModal(true);
     selectedPlace.current = id;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    setShowModal(false);
   }
 
   function handleSelectPlace(id) {
@@ -59,7 +59,7 @@ function App() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
-    modal.current.close();
+    setShowModal(false);
     const storedIds = JSON.parse(localStorage.getItem("storedPlaces")) || [];
 
     localStorage.setItem(
@@ -70,7 +70,7 @@ function App() {
 
   return (
     <>
-      <Modal ref={modal}>
+      <Modal open={showModal}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
